@@ -1,5 +1,8 @@
 ## Java 서버를 Kotlin 서버로 리팩토링
 
+### 도메인 계층을 kotlin으로 변경
+
+
 ### plugin 추가
 - JPA 사용: Entity를 등록할 때 기본 생성자를 필요로 하게 된다
   → build.gradle: plugins { id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21' } 추가

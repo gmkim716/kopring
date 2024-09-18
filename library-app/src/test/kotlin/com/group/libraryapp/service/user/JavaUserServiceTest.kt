@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class UserServiceTest @Autowired constructor (
+class JavaUserServiceTest @Autowired constructor (
   private val userService: UserService,
   private val userRepository: UserRepository,
 ) {
@@ -61,7 +61,7 @@ class UserServiceTest @Autowired constructor (
   fun updateUserTest() {
     // given
     val savedUser = userRepository.save(User("A", null))
-    val request = UserUpdateRequest(savedUser.id, "B")
+    val request = UserUpdateRequest(savedUser.id!!, "B")  // id는 null이 절대 아니다는 것을 전달하기 위해 !! 사용
 
     // when
     userService.updateUserName(request)
