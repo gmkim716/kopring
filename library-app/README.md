@@ -1,8 +1,33 @@
 ## 코틀린에서 테스트 진행
+### 작성한 모든 테스트 메서드 실행 방법
+방법 1. (터미널) ./gradlew test
+방법 2. gradle 탭 → Tasks → verification → test
+
+### @DisplayName
+테스트 메서드를 직관적으로 파악하기 위해 DisplayName을 사용한다
+ex) @DisplayName("사용자 생성 테스트")
+
+### 생성 테스트와 조회 테스트를 같이 돌렸을 때 실패하는 이유
+- 두 테스트가 Spring Context를 공유한다
+  1. 생성 테스트가 실행되면, Spring Context를 하나 띄우게 된다. 이때 내부적으로 H2 DB도 하나만 띄우게 된다.
+  2. 생성 테스트로 인해 user가 1명 추가된다
+  3. 조회 테스트가 과정에서 user가 2명 추가된다
+  4. 조회 테스트의 hasSize(2) 검증이 실행되었을 때, 3명이 존재하기 때문에 검증에 실패한다 
+  cf. 조회 테스트가 먼저 진행되더라도 발생하는 문제
+→ 같은 DB를 공유하고 있기 때문에 발생하는 문제
+
+따라서, 공유 자원으로 사용되는 DB를 깨끗하게 관리해야 한다
+- userRepository.deleteAll()을 사용할 수도 있지만, 이때 테스트 코드간의 중복이 발생한다
+- @AfterEach를 사용하여 테스트가 끝날 때마다 실행되는 코드를 작성한다
 
 ### isNull 검증
 jetbrain의 nullable annotation을 사용하여 null 검증한다
 cf. import org.jetbrains.annotations.Nullable
+
+### SpringBootTest
+- SpringContext가 관리하는 Bean을 테스트할 때 사용해야 하는 어노테이션
+- SpringContext가 관리 : Service, Repository, Component, Controller
+
 
 ### 자주 사용되는 단언문
 - 참/거짓 검증 : .isTrue / .isFalse
