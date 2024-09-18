@@ -1,3 +1,22 @@
+## Java 서버를 Kotlin 서버로 리팩토링
+
+### plugin 추가
+- JPA 사용: Entity를 등록할 때 기본 생성자를 필요로 하게 된다
+  → build.gradle: plugins { id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21' } 추가
+- kotlin/reflect/full/KClasses
+  → build.gradle: dependencies { id 'org.jetbrains.kotlin.plugin.reflect' version '1.6.21' } 추가
+
+### 리팩토링 계획
+1. Domain
+   - 특징 : POJO, JPA Entity 객체
+2. Repository
+   - 특징 : Spring Bean, 의존성 X
+3. Service
+   - 특징 : Spring Bean, 의존성 O, 비즈니스 로직
+4. Controller
+  - 특징 : Spring Bean, 의존성 O, DTO의 경우 숫자가 많다
+  
+
 ## 코틀린에서 테스트 진행
 ### 작성한 모든 테스트 메서드 실행 방법
 방법 1. (터미널) ./gradlew test
