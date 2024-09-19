@@ -1,4 +1,14 @@
+## 새로운 요구사항 추가
 
+### ObjectMother 패턴, Test Fixture 패턴을 사용한 객체 생성
+- book 객체를 만드는 함수를 미리 만들어둔다: 생성자를 통해 만드는 것이 아닌, 정적 팩토리 메서드를 이용
+- ex) companion object{ fun fixture () : Book { return Book(...) } }
+→ 새로운 필드가 추가되더라도 테스트 코드를 수정하지 않아도 된다 :)
+
+### 구현목표: 책의 분야 추가하기
+- type, status를 서버에서 관리하는 방법과 장단점에 대해 이해한다
+- test fixture의 필요성을 느끼고 구성하는 방법을 알아본다
+- kotlin에서 enum + JPA + Spring Boot를 활용하는 방법을 알아본다
 
 ## Kotlin과 JPA를 함께 사용할 때 주의할 점
 ### 1. Setter
@@ -172,7 +182,6 @@ cf. 강사님의 주관에 따라 2번 방식을 사용
 
 ### data 클래스
 - toString(), hashCode(), equals(), copy() 메서드를 자동으로 만들어주는 클래스 
-
 
 ## 자바 프로젝트에서 코틀린 프로젝트로 전환하기
 ### build.gradle
