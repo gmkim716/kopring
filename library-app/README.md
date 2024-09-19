@@ -1,7 +1,76 @@
+
+
+## Kotlin과 JPA를 함께 사용할 때 주의할 점
+### 1. Setter
+1. var 타입의 프로퍼티
+2. setter 대신 update 함수를 만들어 사용
+
+- setter 대신 좋은 이름의 함수를 만들어 사용하는 것이 훨씬 clean 하다 
+- 하지만, setter는 public이기 때문에, 유저 이름 업데이트 기능에서 setter를 사용할'수도' 있다
+- 코드 상, setter를 사용할'수도' 있다는 점이 불편하다
+
+→ setter를 private 하게 만드는 방법 2가지
+
+1. backing property 사용
+```kotlin
+class User (
+  private var _name: String
+) {
+  val name: String
+    get() = this._name
+}
+```
+2. custom setter 사용
+```kotlin
+class User(
+  name: S
+) {
+  var name = name   
+    private set
+}
+```
+
+그러나, 두 방법 모두 프로퍼티가 많아지면 번거롭다
+따라서, 강사 기준으로 setter를 열어두지만 사용하지 않는 방법을 선호한다
+trade-off의 영역이므로, 팀 컨벤션에 맞게 활용하도록 한다 
+
+### 2. 생성자 안의 property vs 클래스 body 안의 property
+property를 생성자 안에만 선언해야 하는가? → No, 클래스 body 안에도 선언할 수 있다 
+
+강사의 의견에 따르면, 기준이 있어야 한다
+1. 모든 property를 생성자에 넣거나
+2. property를 생성자, body 안에 넣을 때 구분되는 명확한 기준이 있거나
+
+### JPA와 data class
+- 결론: Entity는 data class로 만들지 않는다 
+- 이유: equals, hashCode, toString은 모두 JPA Entity에 100% 적합하진 않는 메서드이기 때문이다
+  ex) User 클래스의 equals를 호출함으로 인해, userHistory 클래스의 equals가 호출된다. 이때 다시 User 클래스의 equals가 호출되면서 무한 호출되는 문제가 발생할 수 있다
+- Tip: Entity가 생성되는 로직을 찾고싶다면, constructor 를 찾아보자
+ex) 클래스에 constructor를 추가해서 클릭해보면 실제 생성되는 로직을 확인할 수 있다 
+
 ## Java 서버를 Kotlin 서버로 리팩토링
 
-### 도메인 계층을 kotlin으로 변경
+### Controller를 kotlin으로 변경
 
+
+### Dto를 kotlin으로 변경
+- 간단하지만 양이 많은 것이 특징
+- Convert Java to Kotlin 실행, 단축키(command + option + shift + k) 활용
+- null 가능 여부와 같이, 잘못된 변환이 있을 수 있으므로 변환된 코드를 확인해 볼 필요가 있다
+- data class로 변경하면 디버깅 과정에서 equals, hashCode, toString 메서드를 사용할 수 있다 
+- 정적 팩토리 메서드 적용
+
+### Service를 kotlin으로 변경
+- kotlin에서는 상속 및 오버라이드를 사용하지 않는다. 만약 필요한 경우 open 키워드를 사용한다.
+- open을 매번 사용하는 것이 번거로울 때 plugin을 추가할 수 있다 → build.gradle: plugins { id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21' } 추가
+
+### Repository를 kotlin으로 변경
+- @Repository 어노테이션을 필요로 하지 않는다 
+- Optional 대신 ?를 사용한다  
+- 반복되는 IllegalArgumentException → ExceptionUtils와 같이 반환 타입이 Nothing인 메서드를 만들어 사용할 수 있다 
+- CrudRepository를 통해 메서들을 직접 만들어 JPA를 사용할 수 있다. cf. ExceptionUtils 참고하기 
+
+### 도메인 계층을 kotlin으로 변경
 
 ### plugin 추가
 - JPA 사용: Entity를 등록할 때 기본 생성자를 필요로 하게 된다
