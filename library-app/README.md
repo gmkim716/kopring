@@ -1,10 +1,16 @@
 ## 섹션 7. 네 번째 요구사항 추가 - Querydsl
 
+### UserLoanHistoryRepository를 Querydsl으로 리팩토링 하기
+- @Query를 사용하지 않은 Repository 기능들도 Querydsl로 변경해야 할까? 
+  → 강사님의 의견으로는 추천한다. 동적 쿼리의 간편함 때문
+- 필드와 조건이 늘어날수록 함수의 명칭이 늘어날 수 있다
+  ex) findByA, findByAAndB, findByAAndC, findByAAndD .. 
+- UserLoanHistoryRepository 코드 참고하기
+
 ### 첫 번째 방식 vs 두 번째 방식, 어떤 방식이 더 좋을까
 - 2번째 방식을 추천한다. 멀티 모듈을 사용하는 경우 모듈 별로만 Repository를 쓰는 경우가 많기 때문이다
 - 모듈1 Repository, 모듈2 Repository - Core 모듈을 연결해 각각 사용하는 방식을 사용하다 보니 2번 방식을 추천한다 (...?)
 - Core 모듈에서는 Spring Data JPA Repository를 기본으로, 다른 모듈에서 사용할 수 있도록 한다
-
 
 ### Querydsl 사용하기, 두 번째 방법
 - Projections.constructor : Query문을 통해 모든 속성을 가져오는 것이 아닌, 특정 요소만 가져오기 = 주어진 Dto의 생성자를 호출한다

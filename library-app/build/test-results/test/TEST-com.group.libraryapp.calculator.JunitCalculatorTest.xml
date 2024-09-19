@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.group.libraryapp.calculator.JunitCalculatorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-09-19T08:18:42" hostname="gimgyeongmin-ui-MacBookAir.local" time="0.022">
+<testsuite name="com.group.libraryapp.calculator.JunitCalculatorTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2024-09-19T09:02:59" hostname="gimgyeongmin-ui-MacBookAir.local" time="0.02">
   <properties/>
-  <testcase name="divideTest()" classname="com.group.libraryapp.calculator.JunitCalculatorTest" time="0.019"/>
+  <testcase name="divideTest()" classname="com.group.libraryapp.calculator.JunitCalculatorTest" time="0.017"/>
   <testcase name="addTest()" classname="com.group.libraryapp.calculator.JunitCalculatorTest" time="0.0"/>
   <testcase name="multiplyTest()" classname="com.group.libraryapp.calculator.JunitCalculatorTest" time="0.0"/>
   <testcase name="divideExceptionTest()" classname="com.group.libraryapp.calculator.JunitCalculatorTest" time="0.002"/>
