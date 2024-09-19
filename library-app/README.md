@@ -1,4 +1,21 @@
-## 새로운 요구사항 추가
+## 섹션 4.새로운 요구사항 추가
+
+
+### Boolean을 Enum으로 변경하기
+- boolean으로 관리하는 타입이 여러 개이면, 이해하기 어려워진다
+- boolean으로 표현되는 타입의 조합 상태가 모두 유의미하지는 않다
+해결: Enum을 도입하면 코드의 가독성을 높일 수 있다
+
+### Enum이 숫자로 DB에 저장되면 발생하는 문제
+1. 기존 Enum의 순서가 바뀌면 아주 큰일이 난다
+2. 기존 Enum 타입의 삭제, 새로운 Enum 타입의 추가가 제한적이다
+해결: @Enumerated(EnumType.STRING)을 사용하여 Enum 타입을 String으로 변환하여 저장한다
+
+### Enum 타입 사용 이유
+- 사용 이유 (if문을 통해 진행하는 type: String의 단점)
+  1. 현재 검증되지 않고 있으며, 검즈 코드를 추가 작성하기 번거롭다
+  2. 코드만 보았을 때 어떤 값이 DB에 있는지 알 수 없다 
+  3. type과 관련한 새로운 로직을 작성할 때 번거롭다
 
 ### ObjectMother 패턴, Test Fixture 패턴을 사용한 객체 생성
 - book 객체를 만드는 함수를 미리 만들어둔다: 생성자를 통해 만드는 것이 아닌, 정적 팩토리 메서드를 이용
@@ -10,7 +27,7 @@
 - test fixture의 필요성을 느끼고 구성하는 방법을 알아본다
 - kotlin에서 enum + JPA + Spring Boot를 활용하는 방법을 알아본다
 
-## Kotlin과 JPA를 함께 사용할 때 주의할 점
+## 섹션 3. Kotlin과 JPA를 함께 사용할 때 주의할 점
 ### 1. Setter
 1. var 타입의 프로퍼티
 2. setter 대신 update 함수를 만들어 사용
@@ -58,7 +75,7 @@ property를 생성자 안에만 선언해야 하는가? → No, 클래스 body �
 - Tip: Entity가 생성되는 로직을 찾고싶다면, constructor 를 찾아보자
 ex) 클래스에 constructor를 추가해서 클릭해보면 실제 생성되는 로직을 확인할 수 있다 
 
-## Java 서버를 Kotlin 서버로 리팩토링
+## 섹션 2. Java 서버를 Kotlin 서버로 리팩토링
 
 
 ### JSON parse error
@@ -103,7 +120,7 @@ ex) 클래스에 constructor를 추가해서 클릭해보면 실제 생성되는
   - 특징 : Spring Bean, 의존성 O, DTO의 경우 숫자가 많다
   
 
-## 코틀린에서 테스트 진행
+## 섹션 1. 코틀린에서 테스트 진행
 ### 작성한 모든 테스트 메서드 실행 방법
 방법 1. (터미널) ./gradlew test
 방법 2. gradle 탭 → Tasks → verification → test
@@ -183,7 +200,7 @@ cf. 강사님의 주관에 따라 2번 방식을 사용
 ### data 클래스
 - toString(), hashCode(), equals(), copy() 메서드를 자동으로 만들어주는 클래스 
 
-## 자바 프로젝트에서 코틀린 프로젝트로 전환하기
+## 섹션 0. 자바 프로젝트에서 코틀린 프로젝트로 전환하기
 ### build.gradle
 - plugin : id 'org.jetbrains.kotlin.jvm' version '1.6.21'
 - dependencies : implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8" 
