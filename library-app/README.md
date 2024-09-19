@@ -50,8 +50,12 @@ ex) 클래스에 constructor를 추가해서 클릭해보면 실제 생성되는
 
 ## Java 서버를 Kotlin 서버로 리팩토링
 
-### Controller를 kotlin으로 변경
 
+### JSON parse error
+- Jackson이 Kotlin을 지원하지 않아 발생하는 문제
+- build.gradle: dependencies { implementation "com.fasterxml.jackson.module:jackson-module-kotlin" } 추가
+
+### Controller를 kotlin으로 변경
 
 ### Dto를 kotlin으로 변경
 - 간단하지만 양이 많은 것이 특징
