@@ -1,3 +1,46 @@
+## 섹션 7. 네 번째 요구사항 추가 - Querydsl
+
+### 첫 번째 방식 vs 두 번째 방식, 어떤 방식이 더 좋을까
+- 2번째 방식을 추천한다. 멀티 모듈을 사용하는 경우 모듈 별로만 Repository를 쓰는 경우가 많기 때문이다
+- 모듈1 Repository, 모듈2 Repository - Core 모듈을 연결해 각각 사용하는 방식을 사용하다 보니 2번 방식을 추천한다 (...?)
+- Core 모듈에서는 Spring Data JPA Repository를 기본으로, 다른 모듈에서 사용할 수 있도록 한다
+
+
+### Querydsl 사용하기, 두 번째 방법
+- Projections.constructor : Query문을 통해 모든 속성을 가져오는 것이 아닌, 특정 요소만 가져오기 = 주어진 Dto의 생성자를 호출한다
+- 뒤에 나오는 파라미터들이 생성자로 들어간다
+
+장점: 클래스만 바로 만들면 되어 간결하다
+단점: 필요에 따라 여러 Repository를 모두 불러와야 한다 
+
+### Querydsl 사용하기, 첫 번째 방법
+1. UserRepositoryCustom 생성
+2. UserRepository가 상속받을 수 있도록 설
+3. UserRepositoryCustomImpl 생성
+4. QuerydslConfig 생성: querydsl 작성에 필요한 Bean을 등록한다
+
+장점: 서비스단에서 UserRepository 하나만 사용하면 된다    
+단점: 인터페이스와 클래스를 항상 같이 만들어주어야 하는 것이 부담이고 번거롭다 
+
+### Querydsl 도입하기
+- JPQL의 단점  
+  1. 문자열로 쿼리문을 작성하기 때문에 버그를 찾기 어렵다
+  2. 문법이 조금 달라 그때마다 검색해 찾아봐야 한다
+  3. 동적 쿼리 작성이 어렵다
+  4. 도메인 코드 변경에 취약하다
+- JPQL의 단점을 보완하기 위해 Querydsl을 도입한다
+- build.gradle: plugins { id 'org.jetbrains.kotlin.kapt' version '1.6.21' }
+  build.gradle: dependencies { implementation 'com.querydsl:querydsl-jpa:5.0.0' }
+  build.gradle: dependencies { kapt("com.querydsl:querydsl-apt:5.0.0:jpa") }
+  build.gradle: dependencies { kapt("org.springframework.boot:spring-boot-configuration-processor") }
+- build > generated > source > kapt > main > ... > Q 클래스 생성된 모습 확인 가능
+
+
+### 구현 목표
+- JPQL과 Querydsl의 장단점을 이해할 수 있다
+- Querydsl을 Kotlin + Spring Boot와 함께 사용할 수 있다
+- Querydsl을 활용해 기존에 존재하던 Repository를 리팩토링 할 수 있다
+
 ## 섹션 6. 세 번째 요구사항 추가
 
 ### 구현목표: 책 통계

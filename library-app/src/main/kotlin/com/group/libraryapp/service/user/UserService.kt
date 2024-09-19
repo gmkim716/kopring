@@ -67,9 +67,12 @@ class UserService (
 //      )
 //    }
 
-    // 리팩토링 2: UserLoanHistoryResponse 생성 로직도 팩토리 메서드를 통해 캡슐화
-    return userRepository.findAllWithHistories().map { user ->
-      UserLoanHistoryResponse.of(user)
-    }
+//    // 리팩토링 2: UserLoanHistoryResponse 생성 로직도 팩토리 메서드를 통해 캡슐화
+//    return userRepository.findAllWithHistories().map { user ->
+//      UserLoanHistoryResponse.of(user)
+//    }
+
+    return userRepository.findAllWithHistories()
+      .map(UserLoanHistoryResponse::of)
   }
 }

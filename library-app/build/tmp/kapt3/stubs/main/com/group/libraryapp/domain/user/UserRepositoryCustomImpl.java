@@ -6,13 +6,13 @@ import java.lang.System;
 public final class UserRepositoryCustomImpl implements com.group.libraryapp.domain.user.UserRepositoryCustom {
     private final com.querydsl.jpa.impl.JPAQueryFactory queryFactory = null;
     
-    public UserRepositoryCustomImpl(@org.jetbrains.annotations.NotNull()
+    public UserRepositoryCustomImpl(@org.jetbrains.annotations.NotNull
     com.querydsl.jpa.impl.JPAQueryFactory queryFactory) {
         super();
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
     public java.util.List<com.group.libraryapp.domain.user.User> findAllWithHistories() {
         return null;
     }
