@@ -1,4 +1,67 @@
+## 추가 강의 - 코프링과 플러그인
+1. 스프링 컴포너트와 spring 플러그인: id "org.jetbrains.kotlin.plugin.spring" version "1.6.21"
+2. JPA 객체와 기본 생성자: id "org.jetbrains.kotlin.plugin.jpa" version "1.6.21"
+3. JPA 객체와 open: id "org.jetbrains.kotlin.plugin.allopen" version "1.6.21"
+  allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.MappedSuperclass")
+    annotation("javax.persistence.Embeddable")
+  }
+
+## 추가 강의
+문제 상황: 테스트 코드에서 연관관계를 갖는 경우, 영속성 컨텍스트에 저장된 객체를 가져올 때, 객체의 필드를 가져오지 않는 경우가 있다
+제목: 테스트 코드와 LazyInitializationException
+- 방법 1: @Transactional을 사용하여 해결
+```kotlin
+@Transactional
+@Test
+fun test() { ... }
+```
+  장점: 간결하다, 롤백이 된다, 트랜잭션별로 테스트를 격리할 수 있어 병렬 테스트가 가능하다
+  단점: 테스트 내성이 떨어진다
+- 방법 2: N쪽의 Repository를 활용한다 = 원래는 lazyFetching이 진행되어야 하는 부분을 강제로 가져온다
+```kotlin
+@SpringBootTest
+class TempTest @Autowired constructor(
+  private val userService: UserService,
+  private val userRepository: UserRepository,
+  private val userLoanHistoryRepository: UserLoanHistoryRepository  // 1:n에서 n측면의 Repository
+) {
+  ...
+}
+```
+- 방법 3: fetch join을 사용해 미리 불러온다 = fetch join을 사용하면, 연관관계를 가진 객체를 한 번에 가져올 수 있다
+  단점: 1:N 관계에서 하나의 repository에 대해서만 사용 가능
+- 방법 4: TxHelper를 이용한다 
+```kotlin
+@Component
+class TxHelper {
+  @Transactional
+  fun exec(block: () -> Unit) {
+    block()
+  }
+}
+```
+
+## 섹션 8. 마지막 세션
+### 강의에서 다룬 내용
+- 언어: Kotlin
+  빌드 툴: Gradle
+  서버 프레임워크: Spring Boot
+  DB 접근 기술: JPA (JPQL, fetch join, Querydsl)
+  DB: SQL (join, sum, avg, count, group by, order by)
+- 테스트 코트: 테스트 코드란 무엇인지 / JUnit5 / Test Fixture
+  클린 코드: 정적 팩토리 메소드 / 함수형 프로그래밍
+  설계 역량: Enum class / 애플리케이션과 DB 사이의 trade-off
+- PDF 부록: Jackson
+
 ## 섹션 7. 네 번째 요구사항 추가 - Querydsl
+
+### 정리
+1. JPQL과 Querydsl의 장단점을 이해한다
+2. Querydsl을 Kotlin + Spring Boot와 함께 사용하고 2가지 방식의 장단점을 이해한다
+3. Querydsl의 기본적인 사용법을 익힌다
+4. Querydsl의 기존 Repository를 리팩토링 한다
 
 ### UserLoanHistoryRepository를 Querydsl으로 리팩토링 하기
 - @Query를 사용하지 않은 Repository 기능들도 Querydsl로 변경해야 할까? 
@@ -40,7 +103,6 @@
   build.gradle: dependencies { kapt("com.querydsl:querydsl-apt:5.0.0:jpa") }
   build.gradle: dependencies { kapt("org.springframework.boot:spring-boot-configuration-processor") }
 - build > generated > source > kapt > main > ... > Q 클래스 생성된 모습 확인 가능
-
 
 ### 구현 목표
 - JPQL과 Querydsl의 장단점을 이해할 수 있다
